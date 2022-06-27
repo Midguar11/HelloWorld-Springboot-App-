@@ -1,22 +1,28 @@
-pipeline{
+pipeline {
     agent any
     stages{
-        stage('Git clone'){
+        stage('Git Clone'){
             steps{
-                git 'https://github.com/Midguar11/HelloWorld-Springboot-App-.git'
+                git branch: 'main', url: 'https://github.com/Midguar11/HelloWorld-Springboot-App-.git'
             }
         }
         
-        stage('maven build'){
+        stage('Maven Test'){
+            steps{
+                sh 'mvn test'
+            }
+        }
+        
+        stage('Maven Package'){
             steps{
                 sh 'mvn package'
             }
         }
-        stage('Create Dockerimage'){
+        
+        stage('Maven Deploy'){
             steps{
-                sh 'docker build -t thetips4you/springboot:latest .'
+                echo " Deploying the ar file to the server "
             }
         }
-        
     }
 }
